@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          "relative h-full antialiased",
+          "relative h-full font-sans antialiased",
           inter.variable,
           playfairDisplay.variable
         )}
