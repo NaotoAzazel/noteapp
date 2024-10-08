@@ -1,14 +1,14 @@
-"use client"
-
-import { useState } from "react"
 import Link from "next/link"
+import { getServerSession } from "next-auth"
 
-import { Button, buttonVariants } from "@/components/ui/button"
+import { authOptions } from "@/lib/auth"
+import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
+import { SignOutButton } from "@/components/layouts/header/sign-out-button"
 import { MaxWidthWrapper } from "@/components/max-width-wrapper"
 
-export function Header() {
-  const [isAuth, setIsAuth] = useState<boolean>(false)
+export async function Header() {
+  const isAuth = await getServerSession(authOptions)
 
   return (
     <div className="sticky inset-x-0 top-0 z-50 flex h-14 w-full items-center border-b border-gray-200 bg-white/75 px-2 backdrop-blur-lg">
@@ -28,7 +28,6 @@ export function Header() {
                     size: "sm",
                     className: "hidden sm:flex",
                   })}
-                  onClick={() => setIsAuth(true)}
                 >
                   Sign in
                 </Link>
@@ -44,13 +43,7 @@ export function Header() {
               </>
             ) : (
               <>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setIsAuth(false)}
-                >
-                  Sign out
-                </Button>
+                <SignOutButton />
                 <Link
                   href="/notes"
                   className={buttonVariants({ size: "sm", className: "px-4" })}
