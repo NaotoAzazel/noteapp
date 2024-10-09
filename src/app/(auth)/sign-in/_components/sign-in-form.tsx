@@ -1,13 +1,14 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
 
 import { cn } from "@/lib/utils"
 import { SignInSchema, signInSchema } from "@/lib/validation/auth"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Icons } from "@/components/icons"
@@ -82,6 +83,9 @@ export function SignInForm() {
           {isLoading && <Icons.spinner className="mr-2 size-4 animate-spin" />}
           <span>Sign in</span>
         </Button>
+        <Link href="/sign-up" className={buttonVariants({ variant: "link" })}>
+          Dont have an account? Sign up
+        </Link>
       </form>
     </div>
   )
