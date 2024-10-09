@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client"
-import bcrypt from "bcryptjs"
+import bcrypt, { hash } from "bcryptjs"
 
 import { User } from "@/types/auth"
 import { db } from "@/lib/db"
@@ -8,11 +8,9 @@ function comparePasswords(password: string, hashedPassword: string) {
   return bcrypt.compareSync(password, hashedPassword)
 }
 
-function saltAndHashPassword(password: string) {
-  const saltRounds = 10
-  const salt = bcrypt.genSaltSync(saltRounds)
-  const hash = bcrypt.hashSync(password, salt)
-  return hash
+async function hashPassword(password: string) {
+  const SALT_ROUNDS = 10
+  return await hash(password, SALT_ROUNDS)
 }
 
 interface GetUserByParams {
@@ -38,4 +36,4 @@ async function createUser({
   return createdUser
 }
 
-export { comparePasswords, saltAndHashPassword, getUserByParams, createUser }
+export { comparePasswords, hashPassword, getUserByParams, createUser }
