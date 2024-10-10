@@ -1,4 +1,6 @@
+import Image from "next/image"
 import Link from "next/link"
+import logo from "@/assets/images/logo.png"
 import { getServerSession } from "next-auth"
 
 import { authOptions } from "@/lib/auth"
@@ -14,8 +16,11 @@ export async function Header() {
     <div className="sticky inset-x-0 top-0 z-50 flex h-14 w-full items-center border-b border-gray-200 bg-white/75 px-2 backdrop-blur-lg">
       <MaxWidthWrapper>
         <header className="flex w-full justify-between text-slate-800">
-          <Link href="/" className="flex flex-row items-center">
-            {/* TODO: paste here logo */}
+          <Link
+            href="/"
+            className="flex flex-row items-center justify-center gap-2"
+          >
+            <Image src={logo} className="size-6" alt="logo" />
             <span className="font-medium">Note Nest</span>
           </Link>
           <nav className="ml-auto flex flex-row items-center gap-6">
