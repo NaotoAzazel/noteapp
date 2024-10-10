@@ -7,7 +7,7 @@ import { MaxWidthWrapper } from "@/components/max-width-wrapper"
 
 export default function Home() {
   return (
-    <section className="relative h-screen items-center justify-center">
+    <section className="relative items-center justify-center">
       <MaxWidthWrapper>
         <div className="container my-44 flex max-w-3xl flex-col items-center text-center">
           <div className="mb-16 flex flex-col gap-5 text-center">
