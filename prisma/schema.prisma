@@ -2,6 +2,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator json {
+  provider = "prisma-json-types-generator"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("POSTGRES_PRISMA_URL")
@@ -56,4 +60,14 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verification_tokens")
+}
+
+model Note {
+  id        String   @id @default(cuid())
+  title     String
+  /// [NoteContent]
+  content   Json
+  creatorId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
