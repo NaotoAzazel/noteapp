@@ -50,10 +50,10 @@ export async function Header() {
               <>
                 <SignOutButton />
                 <Link
-                  href="/notes"
+                  href="/dashboard"
                   className={buttonVariants({ size: "sm", className: "px-4" })}
                 >
-                  Notes
+                  Dashboard
                 </Link>
               </>
             )}
