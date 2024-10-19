@@ -27,13 +27,12 @@ export async function POST(req: Request) {
     }
 
     const dateOfBirthday = new Date(year, month - 1, day)
-    const dateToISO = dateOfBirthday.toISOString()
 
     const hashedPassword = await hashPassword(password)
     const newUser = await createUser({
       email,
       password: hashedPassword,
-      dateOfBirthday: dateToISO,
+      dateOfBirthday: dateOfBirthday,
       ...rest,
     })
 
