@@ -9,7 +9,7 @@ export const authOptions: AuthOptions = {
   pages: {
     signIn: "/sign-in",
   },
-  adapter: PrismaAdapter(db),
+  adapter: PrismaAdapter(db) as any,
   session: { strategy: "jwt" },
   providers: [
     CredentialsProvider({
@@ -45,11 +45,11 @@ export const authOptions: AuthOptions = {
   ],
   // Dont touch callbacks, idk how it works
   callbacks: {
-    async jwt({ token, user, ...userData }) {
+    async jwt({ token, user }) {
       if (user) {
         return {
           ...token,
-          userData,
+          user,
         }
       }
 
@@ -58,10 +58,7 @@ export const authOptions: AuthOptions = {
     async session({ session, token }) {
       return {
         ...session,
-        user: {
-          ...session.user,
-          token,
-        },
+        ...token,
       }
     },
   },

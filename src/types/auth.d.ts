@@ -1,6 +1,6 @@
-export interface User {
+export interface UserAccount {
   username: string
   password: string
   email: string
-  dateOfBirthday: string
+  dateOfBirthday: Date
 }

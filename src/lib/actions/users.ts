@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client"
 import bcrypt, { hash } from "bcryptjs"
 
-import { User } from "@/types/auth"
+import { UserAccount } from "@/types/auth"
 import { db } from "@/lib/db"
 
 function comparePasswords(password: string, hashedPassword: string) {
@@ -22,7 +22,7 @@ async function getUserByParams({ params }: GetUserByParams) {
   return user
 }
 
-interface CreateUser extends User {}
+interface CreateUser extends UserAccount {}
 
 async function createUser({
   dateOfBirthday,
