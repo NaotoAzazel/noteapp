@@ -1,4 +1,5 @@
 import {
+  AlertTriangle,
   ArrowRight,
   House,
   LoaderCircle,
@@ -16,4 +17,5 @@ export const Icons = {
   home: House,
   notebook: Notebook,
   plus: Plus,
+  alertTriangle: AlertTriangle,
 }
