@@ -1,7 +1,6 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Icons } from "@/components/icons"
+import { NoteCreateButton } from "./note-create-button"
 
 interface TopProps {
   username: string
@@ -24,11 +23,7 @@ export function Top({ username, notesAmmount }: TopProps) {
         {greeting}, <span className="capitalize">{username}</span>
       </h1>
       <div className="flex w-full flex-col justify-center gap-2 sm:flex-row">
-        {/* TODO: implement function to create note */}
-        <Button variant="outline">
-          <Icons.plus className="mr-2 size-4" />
-          <span>Create note</span>
-        </Button>
+        <NoteCreateButton />
         <div className="flex flex-row items-center justify-center gap-2 rounded-md border px-4 py-2 text-sm font-medium">
           <span className="flex flex-row items-center gap-2">
             {notesAmmount > 0 ? (

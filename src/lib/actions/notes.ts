@@ -11,4 +11,31 @@ async function getNotesByParams({ params }: GetNotesByParams) {
   return notes
 }
 
-export { getNotesByParams }
+interface GetNotesByUserIdParams {
+  userId: string
+}
+
+async function getNotesByUserId({ userId }: GetNotesByUserIdParams) {
+  const userNotes = await getNotesByParams({
+    params: {
+      where: {
+        creatorId: {
+          equals: userId,
+        },
+      },
+    },
+  })
+
+  return userNotes
+}
+
+interface CreateNoteParams {
+  params: Prisma.NoteCreateArgs
+}
+
+async function createNote({ params }: CreateNoteParams) {
+  const createdNote = await db.note.create(params)
+  return createdNote
+}
+
+export { getNotesByParams, getNotesByUserId, createNote }

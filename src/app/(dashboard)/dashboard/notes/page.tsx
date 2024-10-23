@@ -1,23 +1,38 @@
-import { redirect } from "next/navigation"
-import { getServerSession } from "next-auth"
+import { Suspense } from "react"
+import { getServerSession, Session } from "next-auth"
 
-import { getNotesByParams } from "@/lib/actions/notes"
+import { getNotesByUserId } from "@/lib/actions/notes"
 import { authOptions } from "@/lib/auth"
 
-export default async function NotesPageById() {
-  const user = await getServerSession(authOptions)
+import { NoteCreateButton } from "../_components/note-create-button"
+import DashboardShell from "../../_components/dashboard-shell"
+import { Header } from "../../_components/header"
+import { NoteItem } from "./_components/note-item"
+import { NotesFeed } from "./_components/notes-feed"
 
-  const lastUserNote = await getNotesByParams({
-    params: {
-      where: { creatorId: { equals: user?.user.id } },
-      take: 1,
-      orderBy: { createdAt: "desc" },
-    },
+export default async function NotesDashboardPage() {
+  const user = (await getServerSession(authOptions)) as Session
+  const userNotesPromise = getNotesByUserId({
+    userId: user?.user.id,
   })
 
-  if (lastUserNote[0]) {
-    redirect(`/dashboard/notes/${lastUserNote[0].id}`)
-  }
-
-  return <></>
+  return (
+    <DashboardShell>
+      <Header heading="Notes" text="Check all your notes">
+        <NoteCreateButton />
+      </Header>
+      <Suspense
+        fallback={
+          <div className="flex flex-col gap-2">
+            <NoteItem.Skeleton />
+            <NoteItem.Skeleton />
+            <NoteItem.Skeleton />
+            <NoteItem.Skeleton />
+          </div>
+        }
+      >
+        <NotesFeed userNotesPromise={userNotesPromise} />
+      </Suspense>
+    </DashboardShell>
+  )
 }

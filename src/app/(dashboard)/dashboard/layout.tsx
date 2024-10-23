@@ -1,19 +1,24 @@
 import { dashboardConfig } from "@/config/dashboard"
 import { DashboardNav } from "@/components/layouts/dashboard-nav/dashboard-nav"
+import { MaxWidthWrapper } from "@/components/max-width-wrapper"
 
 interface DashbordLayoutProps {
   children: React.ReactNode
 }
 
-export default function DashbordLayout({ children }: DashbordLayoutProps) {
+export default function DashboardLayout({ children }: DashbordLayoutProps) {
   return (
-    <div className="flex h-[calc(100vh-4rem)] flex-row">
-      <aside className="border bg-zinc-50 p-4 lg:w-64">
-        <DashboardNav items={dashboardConfig.sidebarNav} />
-      </aside>
-      <div className="flex max-h-[calc(100vh-7rem)] w-full flex-col overflow-y-auto p-4 sm:p-4">
-        {children}
-      </div>
+    <div className="flex flex-col">
+      <MaxWidthWrapper>
+        <div className="my-7 grid flex-1 gap-12 lg:grid-cols-[160px_1fr]">
+          <aside className="w-170px hidden flex-col lg:flex">
+            <DashboardNav items={dashboardConfig.sidebarNav} />
+          </aside>
+          <main className="flex w-full flex-1 flex-col overflow-hidden">
+            {children}
+          </main>
+        </div>
+      </MaxWidthWrapper>
     </div>
   )
 }
