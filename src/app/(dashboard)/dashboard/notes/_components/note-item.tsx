@@ -13,7 +13,7 @@ export function NoteItem({ id, title, createdAt }: NoteItemProps) {
 
   return (
     <Link
-      href={id}
+      href={`/note/edit/${id}`}
       className="flex flex-col gap-1 rounded-md border p-3 px-5 transition-colors duration-200 hover:bg-accent"
     >
       <span className="font-medium">{title}</span>
