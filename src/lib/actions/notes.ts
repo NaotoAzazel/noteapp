@@ -41,6 +41,59 @@ async function getNoteById({ noteId }: GetNoteByIdParams) {
   return noteById
 }
 
+interface GetUserNotesWithFiltersParams {
+  creatorId: string
+  searchedTitle?: string
+  sortByTitle: Prisma.SortOrder
+  sortByUpdatedAt: Prisma.SortOrder
+  page: number
+  notesPerPage: number
+}
+
+async function getUserNotesWithFilters({
+  creatorId,
+  searchedTitle = undefined,
+  sortByTitle,
+  sortByUpdatedAt,
+  page,
+  notesPerPage,
+}: GetUserNotesWithFiltersParams) {
+  const skip = (page - 1) * notesPerPage
+
+  const whereClause = {
+    title: {
+      startsWith: searchedTitle,
+      mode: Prisma.QueryMode.insensitive,
+    },
+    creatorId,
+  }
+
+  const totalNotesCount = await db.note.count({
+    where: whereClause,
+  })
+
+  const notes = await db.note.findMany({
+    where: whereClause,
+    orderBy: [{ title: sortByTitle }, { updatedAt: sortByUpdatedAt }],
+    take: notesPerPage,
+    skip,
+  })
+
+  const totalPages = Math.ceil(totalNotesCount / notesPerPage)
+
+  const hasPrevPage = page > 1
+  const hasNextPage = page < totalPages
+
+  return {
+    data: notes,
+    metadata: {
+      totalPages,
+      hasPrevPage,
+      hasNextPage,
+    },
+  }
+}
+
 interface CanUserViewNoteParams {
   userId: string
   noteId: string
@@ -99,6 +152,7 @@ export {
   getNotesByParams,
   getNotesByUserId,
   getNoteById,
+  getUserNotesWithFilters,
   canUserAccessNote,
   createNote,
   updateNoteById,

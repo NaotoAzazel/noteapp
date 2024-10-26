@@ -1,8 +1,9 @@
 import { Suspense } from "react"
-import { getServerSession, Session } from "next-auth"
 
-import { getNotesByUserId } from "@/lib/actions/notes"
-import { authOptions } from "@/lib/auth"
+import {
+  dashboardNotesSchema,
+  DashboardNotesSchema,
+} from "@/lib/validation/pages"
 
 import { NoteCreateButton } from "../_components/note-create-button"
 import DashboardShell from "../../_components/dashboard-shell"
@@ -10,11 +11,15 @@ import { Header } from "../../_components/header"
 import { NoteItem } from "./_components/note-item"
 import { NotesFeed } from "./_components/notes-feed"
 
-export default async function NotesDashboardPage() {
-  const user = (await getServerSession(authOptions)) as Session
-  const userNotesPromise = getNotesByUserId({
-    userId: user?.user.id,
-  })
+interface NotesDashboardPageProps {
+  searchParams: DashboardNotesSchema
+}
+
+export default async function NotesDashboardPage({
+  searchParams,
+}: NotesDashboardPageProps) {
+  // TODO: title, updatedAt, abc
+  const { page } = dashboardNotesSchema.parse({ page: searchParams.page })
 
   return (
     <DashboardShell>
@@ -31,7 +36,7 @@ export default async function NotesDashboardPage() {
           </div>
         }
       >
-        <NotesFeed userNotesPromise={userNotesPromise} />
+        <NotesFeed page={page} />
       </Suspense>
     </DashboardShell>
   )

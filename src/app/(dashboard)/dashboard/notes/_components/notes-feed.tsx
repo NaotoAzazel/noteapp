@@ -1,23 +1,38 @@
-import { getNotesByUserId } from "@/lib/actions/notes"
+import { getServerSession, Session } from "next-auth"
+
+import { paginationConfig } from "@/config/paginations"
+import { getUserNotesWithFilters } from "@/lib/actions/notes"
+import { authOptions } from "@/lib/auth"
 import { NoItemsPlaceholder } from "@/components/no-items-placeholder"
 
 import { NoteCreateButton } from "../../_components/note-create-button"
 import { NoteItem } from "./note-item"
+import { PaginationControls } from "./pagination-controls"
 
 interface NotesFeedProps {
-  userNotesPromise: ReturnType<typeof getNotesByUserId>
+  page: number
 }
 
-export async function NotesFeed({ userNotesPromise }: NotesFeedProps) {
-  const userNotes = await userNotesPromise
+export async function NotesFeed({ page }: NotesFeedProps) {
+  const user = (await getServerSession(authOptions)) as Session
+
+  const { data, metadata } = await getUserNotesWithFilters({
+    creatorId: user.user.id,
+    notesPerPage: paginationConfig.dashboardNotes.notesPerPage,
+    page,
+    searchedTitle: "",
+    sortByTitle: "asc",
+    sortByUpdatedAt: "desc",
+  })
 
   return (
     <div className="flex flex-col gap-2">
-      {userNotes.length > 0 ? (
+      {data.length > 0 ? (
         <>
-          {userNotes.map((note, i) => (
+          {data.map((note, i) => (
             <NoteItem {...note} key={i} />
           ))}
+          <PaginationControls page={page} {...metadata} />
         </>
       ) : (
         <NoItemsPlaceholder
