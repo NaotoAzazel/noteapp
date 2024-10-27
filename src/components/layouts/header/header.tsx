@@ -1,6 +1,5 @@
 import Image from "next/image"
 import Link from "next/link"
-import logo from "@/assets/images/logo.png"
 import { getServerSession } from "next-auth"
 
 import { siteConfig } from "@/config/site"
@@ -9,6 +8,7 @@ import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 import { SignOutButton } from "@/components/layouts/header/sign-out-button"
 import { MaxWidthWrapper } from "@/components/max-width-wrapper"
+import logo from "@/app/icon.png"
 
 export async function Header() {
   const isAuth = await getServerSession(authOptions)

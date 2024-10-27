@@ -1,9 +1,9 @@
 import Image from "next/image"
 import Link from "next/link"
-import logo from "@/assets/images/logo.png"
 
 import { siteConfig } from "@/config/site"
 import { MaxWidthWrapper } from "@/components/max-width-wrapper"
+import logo from "@/app/icon.png"
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
