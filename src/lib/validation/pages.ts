@@ -20,4 +20,10 @@ const dashboardNotesSchema = z.object({
 
 export type DashboardNotesSchema = z.infer<typeof dashboardNotesSchema>
 
-export { dashboardNotesSchema }
+const signInPageSchema = z.object({
+  "auth-required": z.coerce.boolean().optional(),
+})
+
+export type SignInPageSchema = z.infer<typeof signInPageSchema>
+
+export { dashboardNotesSchema, signInPageSchema }
