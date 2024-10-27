@@ -18,8 +18,11 @@ interface NotesDashboardPageProps {
 export default async function NotesDashboardPage({
   searchParams,
 }: NotesDashboardPageProps) {
-  // TODO: title, updatedAt, abc
-  const { page } = dashboardNotesSchema.parse({ page: searchParams.page })
+  // TODO: updatedAt, abc
+  const parsedParams = dashboardNotesSchema.parse({
+    page: searchParams.page,
+    search: searchParams.search,
+  })
 
   return (
     <DashboardShell>
@@ -36,7 +39,7 @@ export default async function NotesDashboardPage({
           </div>
         }
       >
-        <NotesFeed page={page} />
+        <NotesFeed {...parsedParams} />
       </Suspense>
     </DashboardShell>
   )
