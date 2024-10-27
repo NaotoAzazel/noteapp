@@ -14,9 +14,7 @@ export default function DashboardLayout({ children }: DashbordLayoutProps) {
           <aside className="w-170px hidden flex-col lg:flex">
             <DashboardNav items={dashboardConfig.sidebarNav} />
           </aside>
-          <main className="flex w-full flex-1 flex-col overflow-hidden">
-            {children}
-          </main>
+          <main className="flex w-full flex-1 flex-col">{children}</main>
         </div>
       </MaxWidthWrapper>
     </div>
