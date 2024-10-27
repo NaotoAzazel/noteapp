@@ -32,6 +32,13 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     siteName: siteConfig.name,
   },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: [`${siteConfig.url}/og.jpg`],
+    creator: siteConfig.name,
+  },
   manifest: absoluteUrl("/site.webmanifest"),
 }
 
