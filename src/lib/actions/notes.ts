@@ -41,11 +41,12 @@ async function getNoteById({ noteId }: GetNoteByIdParams) {
   return noteById
 }
 
+export type SortFieldOptions = "title" | "updatedAt" | "createdAt"
+
 interface GetUserNotesWithFiltersParams {
   creatorId: string
   searchedTitle?: string
-  sortByTitle: Prisma.SortOrder
-  sortByUpdatedAt: Prisma.SortOrder
+  sort?: { field: SortFieldOptions; direction: Prisma.SortOrder }
   page: number
   notesPerPage: number
 }
@@ -53,8 +54,7 @@ interface GetUserNotesWithFiltersParams {
 async function getUserNotesWithFilters({
   creatorId,
   searchedTitle = undefined,
-  sortByTitle,
-  sortByUpdatedAt,
+  sort = { field: "createdAt", direction: "desc" },
   page,
   notesPerPage,
 }: GetUserNotesWithFiltersParams) {
@@ -74,7 +74,7 @@ async function getUserNotesWithFilters({
 
   const notes = await db.note.findMany({
     where: whereClause,
-    orderBy: [{ title: sortByTitle }, { updatedAt: sortByUpdatedAt }],
+    orderBy: [{ [sort?.field]: sort?.direction }],
     take: notesPerPage,
     skip,
   })

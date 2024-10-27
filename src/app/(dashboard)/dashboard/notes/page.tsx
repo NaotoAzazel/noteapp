@@ -15,13 +15,13 @@ interface NotesDashboardPageProps {
   searchParams: DashboardNotesSchema
 }
 
-export default async function NotesDashboardPage({
+export default function NotesDashboardPage({
   searchParams,
 }: NotesDashboardPageProps) {
-  // TODO: updatedAt, abc
   const parsedParams = dashboardNotesSchema.parse({
     page: searchParams.page,
     search: searchParams.search,
+    sort: searchParams.sort,
   })
 
   return (
