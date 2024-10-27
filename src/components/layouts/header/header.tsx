@@ -3,6 +3,7 @@ import Link from "next/link"
 import logo from "@/assets/images/logo.png"
 import { getServerSession } from "next-auth"
 
+import { siteConfig } from "@/config/site"
 import { authOptions } from "@/lib/auth"
 import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
@@ -21,7 +22,7 @@ export async function Header() {
             className="flex flex-row items-center justify-center gap-2"
           >
             <Image src={logo} className="size-6" alt="logo" />
-            <span className="font-medium">Note Nest</span>
+            <span className="font-medium">{siteConfig.name}</span>
           </Link>
           <nav className="ml-auto flex flex-row items-center gap-6">
             {!isAuth ? (

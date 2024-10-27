@@ -2,6 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import logo from "@/assets/images/logo.png"
 
+import { siteConfig } from "@/config/site"
 import { MaxWidthWrapper } from "@/components/max-width-wrapper"
 
 export function Footer() {
@@ -13,7 +14,7 @@ export function Footer() {
         <div className="col-span-2 space-y-6">
           <Link href="/" className="flex flex-row gap-2">
             <Image src={logo} className="size-6" alt="logo" />
-            <span className="font-medium">Note Nest</span>
+            <span className="font-medium">{siteConfig.name}</span>
           </Link>
           <p className="max-w-xs text-sm text-gray-600">
             Note Nest - save all your notes in one place
