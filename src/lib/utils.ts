@@ -22,4 +22,8 @@ const getYears = () =>
     value: 1900 + i,
   })).reverse()
 
-export { cn, getDays, getYears }
+function absoluteUrl(path: string) {
+  return `${process.env.NEXT_PUBLIC_APP_URL}${path}`
+}
+
+export { cn, getDays, getYears, absoluteUrl }

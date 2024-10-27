@@ -5,6 +5,10 @@ import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 import { MaxWidthWrapper } from "@/components/max-width-wrapper"
 
+export const metadata = {
+  title: "Main page",
+}
+
 export default function Home() {
   return (
     <section className="relative items-center justify-center">

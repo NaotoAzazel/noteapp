@@ -11,6 +11,10 @@ import { Header } from "../../_components/header"
 import { NoteItem } from "./_components/note-item"
 import { NotesFeed } from "./_components/notes-feed"
 
+export const metadata = {
+  title: "Notes",
+}
+
 interface NotesDashboardPageProps {
   searchParams: DashboardNotesSchema
 }

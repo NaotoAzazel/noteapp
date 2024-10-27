@@ -5,6 +5,10 @@ import { authOptions } from "@/lib/auth"
 
 import { Top } from "./_components/top"
 
+export const metadata = {
+  title: "Dashboard",
+}
+
 export default async function HomeDashboardPage() {
   const user = (await getServerSession(authOptions)) as Session
   const userNotes = await getNotesByUserId({
