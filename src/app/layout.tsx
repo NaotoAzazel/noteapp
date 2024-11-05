@@ -5,8 +5,10 @@ import "../styles/globals.css"
 import { siteConfig } from "@/config/site"
 import { inter, playfairDisplay } from "@/lib/fonts"
 import { absoluteUrl, cn } from "@/lib/utils"
+import { BirthdayNotification } from "@/components/birthday-notification"
 import { Footer } from "@/components/layouts/footer/footer"
 import { Header } from "@/components/layouts/header/header"
+import { Providers } from "@/components/providers"
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -48,20 +50,23 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body
-        className={cn(
-          "relative h-full font-sans antialiased",
-          inter.variable,
-          playfairDisplay.variable
-        )}
-      >
-        <main className="relative flex min-h-screen flex-col">
-          <Header />
-          <div className="flex-1 grow">{children}</div>
-          <Footer />
-        </main>
-      </body>
-    </html>
+    <Providers>
+      <html lang="en">
+        <body
+          className={cn(
+            "relative h-full font-sans antialiased",
+            inter.variable,
+            playfairDisplay.variable
+          )}
+        >
+          <main className="relative flex min-h-screen flex-col">
+            <Header />
+            <div className="flex-1 grow">{children}</div>
+            <Footer />
+            <BirthdayNotification />
+          </main>
+        </body>
+      </html>
+    </Providers>
   )
 }
