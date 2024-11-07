@@ -4,7 +4,9 @@ import { useCallback, useMemo, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { User } from "next-auth"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 
 import { months } from "@/config/date"
 import { cn, getDays, getYears } from "@/lib/utils"
@@ -16,6 +18,11 @@ import { SelectItem } from "@/components/ui/select"
 import { Icons } from "@/components/icons"
 
 import { DateSelect } from "./date-select"
+
+interface ApiErrorResponse {
+  user: User | null
+  message: string
+}
 
 export function SignUpForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -50,12 +57,14 @@ export function SignUpForm() {
       })
 
       if (!response?.ok) {
-        throw new Error("Registration failed")
+        const errorMessage: ApiErrorResponse = await response.json()
+        throw new Error(errorMessage.message || "Registration failed")
       }
 
+      toast.success("Your account was successfully created")
       router.push("/sign-in")
     } catch (error) {
-      console.error("Error when trying to register", error)
+      toast.error(String(error))
     } finally {
       setIsLoading(false)
     }

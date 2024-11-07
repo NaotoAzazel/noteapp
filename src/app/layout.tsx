@@ -5,6 +5,7 @@ import "../styles/globals.css"
 import { siteConfig } from "@/config/site"
 import { inter, playfairDisplay } from "@/lib/fonts"
 import { absoluteUrl, cn } from "@/lib/utils"
+import { Toaster } from "@/components/ui/sonner"
 import { BirthdayNotification } from "@/components/birthday-notification"
 import { Footer } from "@/components/layouts/footer/footer"
 import { Header } from "@/components/layouts/header/header"
@@ -61,6 +62,7 @@ export default function RootLayout({
         >
           <main className="relative flex min-h-screen flex-col">
             <Header />
+            <Toaster richColors visibleToasts={1} />
             <div className="flex-1 grow">{children}</div>
             <Footer />
             <BirthdayNotification />

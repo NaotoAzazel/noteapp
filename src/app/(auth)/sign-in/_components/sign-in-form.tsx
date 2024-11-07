@@ -2,9 +2,11 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 
 import { cn } from "@/lib/utils"
 import { SignInSchema, signInSchema } from "@/lib/validation/auth"
@@ -15,6 +17,8 @@ import { Icons } from "@/components/icons"
 
 export function SignInForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const router = useRouter()
 
   const {
     register,
@@ -28,13 +32,29 @@ export function SignInForm() {
     setIsLoading(true)
 
     try {
-      await signIn("credentials", {
+      const signInResult = await signIn("credentials", {
         ...data,
-        redirect: true,
+        redirect: false,
         callbackUrl: "/",
       })
+
+      if (!signInResult?.ok) {
+        const rawErrorMessage = signInResult?.status
+        let processedErrorMessage = "Authorization failed"
+
+        switch (rawErrorMessage) {
+          case 401: {
+            processedErrorMessage = "Invalid credentials"
+          }
+        }
+
+        throw new Error(processedErrorMessage)
+      }
+
+      toast.success("You have successfully logged in")
+      router.refresh()
     } catch (error) {
-      console.error("Error when trying to authorise", error)
+      toast.error(String(error))
     } finally {
       setIsLoading(false)
     }
